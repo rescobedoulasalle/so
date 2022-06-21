@@ -1,39 +1,41 @@
 #include<stdio.h>
 #include<pthread.h>
+#include<stdlib.h>
 
-// gcc filosofos04.cpp -pthread
+// gcc productores00.cpp -pthread
 
-#define NUM_FILOSOFOS 5
+#define NUM_PRODUCTORES 2
 
-void *filosofo (void *arg);
+const char letras[26]={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+
+void *productor (void *arg);
 
 int main(void)
 {
-	//char filo01[20] = "Sócrates";
-	//char filo02[20] = "Pitágoras";
-
-	pthread_t filosofos[NUM_FILOSOFOS];
-	int identificadores[NUM_FILOSOFOS];
+	pthread_t productores[NUM_PRODUCTORES];
+	int identificadores[NUM_PRODUCTORES];
 
 	int i;
 
-	for (i=0; i<NUM_FILOSOFOS; i++)	{
+	for (i=0; i<NUM_PRODUCTORES; i++)	{
 		identificadores[i] = i;
-		pthread_create (&filosofos[i], NULL, &filosofo, &identificadores[i]);
+		pthread_create (&productores[i], NULL, &productor, &identificadores[i]);
 	}
 
 
-	for (i=0; i<NUM_FILOSOFOS; i++)	{
-		pthread_join(filosofos[i], NULL);
+	for (i=0; i<NUM_PRODUCTORES; i++)	{
+		pthread_join(productores[i], NULL);
 	}
 
 	return 0;
 }
 
-void *filosofo (void *arg) 
+void *productor (void *arg) 
 {
 	int arg2 = *((int *)arg);
+	int aleatorio;
 	for (int i=1; true; i++) {
-		printf ("Filósofo-%d estoy comiendo : %d \n", arg2, i);
+		aleatorio = rand() % 26;
+		printf ("Productor-%d estoy produciendo : %c \n", arg2, letras[aleatorio]);
 	}
 }
