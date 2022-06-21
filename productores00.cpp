@@ -36,6 +36,6 @@ void *productor (void *arg)
 	int aleatorio;
 	for (int i=1; true; i++) {
 		aleatorio = rand() % 26;
-		printf ("Productor-%d estoy produciendo : %c \n", arg2, letras[aleatorio]);
+		printf ("(%d) Productor-%d estoy produciendo : %c \n", i, arg2, letras[aleatorio]);
 	}
 }
